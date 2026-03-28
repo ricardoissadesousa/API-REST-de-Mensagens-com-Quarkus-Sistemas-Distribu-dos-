@@ -1,67 +1,73 @@
-# sdquarkus
+# ✉️ API REST de Mensagens com Quarkus (Sistemas Distribuídos)
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## 📝 Resumo do Projeto
+O projeto **API REST de Mensagens** é uma aplicação back-end desenvolvida em Java utilizando o framework Quarkus. A atividade propõe a criação de um sistema simples de troca de mensagens entre processos distribuídos, utilizando a especificação JAX-RS para expor endpoints HTTP. 
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+O armazenamento dos dados é realizado em memória (sem uso de banco de dados neste momento). O objetivo principal é compreender na prática o roteamento de requisições, o encapsulamento de dados em formato JSON e o mapeamento dos métodos HTTP (GET, POST, DELETE) dentro de uma arquitetura REST.
 
-## Running the application in dev mode
+---
 
-You can run your application in dev mode that enables live coding using:
+## 🚀 Funcionalidades Principais e Endpoints
 
-```shell script
-./mvnw quarkus:dev
+A API gerencia os seguintes endpoints na rota base `/mensagens`:
+
+### 📥 Envio de Mensagem (POST)
+- **Rota:** `POST /mensagens`
+- **Descrição:** Recebe um JSON com remetente e conteúdo, gera um ID sequencial e um *timestamp* automático, e salva na lista em memória. Retorna o status `201 Created`.
+
+### 📋 Listagem de Mensagens (GET)
+- **Rota:** `GET /mensagens`
+- **Descrição:** Retorna um array JSON com todas as mensagens armazenadas atualmente no servidor. Retorna o status `200 OK`.
+
+### 🔍 Busca por ID (GET)
+- **Rota:** `GET /mensagens/{id}`
+- **Descrição:** Busca uma mensagem específica pelo seu identificador. Retorna `200 OK` em caso de sucesso ou `404 Not Found` caso o ID não exista.
+
+### 🗑️ Remoção por ID (DELETE)
+- **Rota:** `DELETE /mensagens/{id}`
+- **Descrição:** Remove uma mensagem da memória com base no identificador fornecido. Retorna `200 OK` se removido com sucesso ou `404 Not Found` caso o ID seja inválido.
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+### 💻 Linguagem, Frameworks e Ferramentas
+- **Java (JDK 17+)**
+- **Quarkus Framework**: Para a criação rápida e otimizada da aplicação.
+- **JAX-RS (RESTEasy Classic)**: Especificação utilizada para criar os endpoints REST e definir as rotas (`@Path`, `@GET`, `@POST`, etc.).
+- **Jackson**: Biblioteca responsável pela serialização e desserialização automática entre objetos Java e formato JSON.
+- **Maven**: Gerenciador de dependências e build do projeto.
+- **Postman**: Utilizado como Cliente HTTP para testar as requisições e respostas da API.
+
+---
+
+## 📂 Organização de Pastas (Padrão MVC Adaptado)
+
+A estrutura do projeto está organizada em pacotes para separar as responsabilidades:
+
+```text
+sistema-mensagens/
+├── src/main/java/br/com/sistema/
+│   ├── model/                 # Representação dos dados
+│   │   └── Mensagem.java
+│   ├── repository/            # Armazenamento em memória (Regra de Negócio)
+│   │   └── MensagemRepository.java
+│   └── controller/            # Exposição dos endpoints REST (JAX-RS)
+│       └── MensagemController.java
+└── pom.xml                    # Configurações do Maven
 ```
+## 🧪 Testes com Cliente HTTP (Postman)
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+Abaixo estão as evidências de teste dos endpoints, validando os respectivos status HTTP:
 
-## Packaging and running the application
+### 1. Criação de Mensagem (Status 201 Created)
+> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O POST E O STATUS 201 ]**
+![Print 201 Created](caminho-da-imagem/print-201.png)
 
-The application can be packaged using:
+### 2. Busca Bem-sucedida (Status 200 OK)
+> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O GET COM ID 1 E O STATUS 200 ]**
+![Print 200 OK](caminho-da-imagem/print-200.png)
 
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/sdquarkus-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and
-  more
-
-## Provided Code
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+### 3. ID Inexistente (Status 404 Not Found)
+> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O GET COM ID 999 E O STATUS 404 ]**
+![Print 404 Not Found](caminho-da-imagem/print-404.png)
