@@ -61,13 +61,21 @@ sistema-mensagens/
 Abaixo estão as evidências de teste dos endpoints, validando os respectivos status HTTP:
 
 ### 1. Criação de Mensagem (Status 201 Created)
-> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O POST E O STATUS 201 ]**
-![Print 201 Created](caminho-da-imagem/print-201.png)
+
+![Print 201 Created](assets/post.png)
 
 ### 2. Busca Bem-sucedida (Status 200 OK)
-> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O GET COM ID 1 E O STATUS 200 ]**
-![Print 200 OK](caminho-da-imagem/print-200.png)
 
-### 3. ID Inexistente (Status 404 Not Found)
-> **[ INSIRA AQUI O SEU PRINT DO POSTMAN MOSTRANDO O GET COM ID 999 E O STATUS 404 ]**
-![Print 404 Not Found](caminho-da-imagem/print-404.png)
+![Print 200 OK](assets/get1.png)
+
+### 3. Busca Bem-sucedida Por ID (Status 200 OK)
+
+![Print 200 OK](assets/get2.png)
+
+### 4. ID Inexistente (GET - Status 404 Not Found)
+
+![Print 200 OK](assets/get3.png)
+
+### ### 5. Remove uma mensagem (DELETE - Status 200 OK)
+
+![Print 404 Not Found](assets/del.png)
